@@ -1,6 +1,6 @@
 <script>
-  import { Map, TileLayer } from "leaflet"
-  import { MAP_CENTER } from "@waliot-oss/share-client-sdk"
+  import { Icon, Map, TileLayer } from "leaflet"
+  import { MAP_CENTER, TrackingObjectMarker } from "@waliot-oss/share-client-sdk"
   import { onMount } from "svelte"
   import ZoomControls from "./ZoomControls.svelte"
   import Card from "./components/Card.svelte"
@@ -10,6 +10,9 @@
 
   /** @type {Map} */
   let map
+
+  /** @type {TrackingObjectMarker} */
+  let trackingObjectMarker
 
   onMount(() => {
     map = new Map(mapElementRef, {
@@ -23,6 +26,22 @@
       zoomControl: false,
       zoomAnimation: false
     })
+
+    trackingObjectMarker = new TrackingObjectMarker(MAP_CENTER, {
+      course: 100,
+      pane: "markerPane",
+      shadowPane: "shadowPane",
+      icon: new Icon({
+        iconUrl: `assets/car.svg`,
+        shadowUrl: `assets/rb_blue.svg`,
+        iconSize: [ 16, 16 ],
+        iconAnchor: [ 8, 8 ],
+        shadowSize: [ 32, 32 ],
+        shadowAnchor: [ 16, 16 ]
+      })
+    })
+
+    map.addLayer(trackingObjectMarker)
   })
 
   function onZoomChange(event) {
