@@ -1,0 +1,8 @@
+node_modules/
+public/build/
+pnpm-global/
+
+.DS_Store
+
+.idea/
+.vscode/
